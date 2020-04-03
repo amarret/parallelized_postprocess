@@ -53,7 +53,7 @@ added_z = np.zeros([10,100])
 
 nbrCores = 2
 
-inputs = ((myfunction, x[i], y[i], z[i]) for i in xrange(len(x)))
+inputs = (np.array([myfunction, x[i], y[i], z[i]]) for i in xrange(len(x)))
 
 strt = ti.time()
 parallel(inputs, N, nbrCores, multiplied_x, squared_y, added_z)
