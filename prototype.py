@@ -5,7 +5,6 @@ import multiprocessing
 import sys
 
 
-
 #==========================================
 def myfunction(x,y,z):
     
@@ -14,13 +13,10 @@ def myfunction(x,y,z):
     return 3*x, y**2, z+1
 
 #==========================================
-#Parallelized computation
+#Parallelized computation wrapper
 def wrapper(inputs) :
     
-    func = inputs[0]
-    args = inputs[1:]
-    
-    return func(*args)
+    return func_to_parallelize(*inputs)
 
 #==========================================        
 def parallel(inputs, lenght, nbrCores, *outputs):
@@ -51,10 +47,17 @@ multiplied_x = np.zeros([10,100])
 squared_y = np.zeros([10,100])
 added_z = np.zeros([10,100])
 
+global func_to_parallelize
 nbrCores = 2
 
-inputs = (np.array([myfunction, x[i], y[i], z[i]]) for i in xrange(len(x)))
+#inputs data
+inputs = (np.array([x[i], y[i], z[i]]) for i in xrange(len(x)))
 
+
+#define which function to use in parallel computation
+func_to_parallelize = myfunction
+
+#start computation
 strt = ti.time()
 parallel(inputs, N, nbrCores, multiplied_x, squared_y, added_z)
 print ti.time()-strt
