@@ -35,8 +35,10 @@ def parallel(inputs, lenght, nbrCores, *outputs):
             
         sys.stderr.write('\rProgress : {0}/{1}'.format(i+1,lenght))
          
-    workers.close()
-    workers.join()    
+    workers.terminate()
+    workers.join() 
+    
+    print ""
 
     return 0
 
