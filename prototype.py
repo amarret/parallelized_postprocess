@@ -22,15 +22,17 @@ def wrapper(inputs) :
     
     return func(*args)
 
-#==========================================        
+
+#==========================================    
 def parallel(inputs, lenght, nbrCores, *outputs):
     
     workers = multiprocessing.Pool(processes = nbrCores)
     results = workers.imap(wrapper,inputs)
     
-    for i, result in enumerate(results, 0): 
-        for j, output in enumerate(outputs, 0): 
-
+    for i, result in enumerate(results): 
+        if isinstance(result, np.ndarray) : result = [result]
+            
+        for j, output in enumerate(outputs):
             output[i] = result[j]
             
         sys.stderr.write('\rProgress : {0}/{1}'.format(i+1,lenght))
@@ -41,6 +43,7 @@ def parallel(inputs, lenght, nbrCores, *outputs):
     print ""
 
     return 0
+
 
 #==========================================
 #inputs
