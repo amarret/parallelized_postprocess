@@ -33,7 +33,7 @@ def parallel(inputs, lenght, nbrCores, *outputs):
         for j, output in enumerate(outputs):
             
             if len(outputs)==1 : output[i] = result
-            else : output[i] = result[j]
+            else:                output[i] = result[j]
             
         sys.stderr.write('\rProgress : {0}/{1}'.format(i+1,lenght))
          
